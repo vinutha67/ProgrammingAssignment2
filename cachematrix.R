@@ -1,23 +1,24 @@
-## Matrix inversion is a costly operration and may benefit by caching the inverse of the matrix.
-##Given an invertible square matrix, the below function pair cache the inverse of the 
+## Matrix inversion is a costly operation and may benefit by caching the inverse of the matrix.
+## Given an invertible square matrix, the below function pair cache the inverse of the 
 ## matrix. 
 
 ## Function makeCacheMatrix: This function creates a "matrix" object that can cache its inverse.
 
 makeCacheMatrix <- function(x = matrix()) {
+      
+      #check if the matrix is a square matrix
       mat_dim <- dim(x)
- 
       if( mat_dim[1] != mat_dim[2]) {
-          print("not a square invertible matrix")
+          message("not a square matrix")
           return(x)
       }
+      
       m_inv <- NULL
-  
- 
+        
       get <- function() x
-  
-  
+    
       setinverse <- function(temp_inverse)  m_inv <<- temp_inverse
+  
       getinverse<- function() m_inv
   
       list(get = get,
@@ -31,6 +32,7 @@ makeCacheMatrix <- function(x = matrix()) {
 ## has not changed), then the cachesolve should retrieve inverse from the cache.
 
 cacheSolve <- function(x, ...) {
+  
         ## Return a matrix that is the inverse of 'x'
         m_c <- x$getinverse()
         if(!is.null(m_c)) {
@@ -40,7 +42,7 @@ cacheSolve <- function(x, ...) {
   
         data <- x$get()
     
-        ## Inverse of a square matrix can be computed with the solve function in R.
+        ## Inverse of a square matrix can be computed with solve function in R.
         m_c <- solve(data)
         x$setinverse(m_c)
         m_c
